@@ -1,4 +1,4 @@
-# TazaAua (Demal) - Clean Air App 🏔️
+# Demal - Clean Air App 🏔️
 
 Приложение для мотивации жителей Алматы выбраться из городского смога в чистый горный воздух.
 
@@ -163,6 +163,7 @@ Demal/
 ## 👨‍💻 Разработчик
 
 Alexander Kisslitsyn  
+Alikhan Amangeldiyev
 Almaty, Kazakhstan 🇰🇿
 
 ---
