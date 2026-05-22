@@ -30,7 +30,7 @@
 ### Установка и запуск
 
 1. Склонируйте репозиторий:
-```bash
+
 git clone [https://github.com/ВАШ_НИК/Demal-App.git](https://github.com/Kissly1/Demal-App.git)
 
 2. Перейдите в папку проекта:
