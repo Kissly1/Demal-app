@@ -9,9 +9,12 @@ import SwiftUI
 
 @main
 struct DemalApp: App {
+    @State private var profileViewModel = ProfileViewModel()
+
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            MainTabView()
+                .environment(profileViewModel)
         }
     }
 }
