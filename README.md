@@ -1,173 +1,114 @@
-# Demal - Clean Air App 🏔️
+# 🏔️ Demal - Clean Air App
 
-Приложение для мотивации жителей Алматы выбраться из городского смога в чистый горный воздух.
+![iOS 17.0+](https://img.shields.io/badge/iOS-17.0%2B-blue.svg)
+![Swift 6](https://img.shields.io/badge/Swift-6.0-orange.svg)
+![SwiftUI](https://img.shields.io/badge/UI-SwiftUI-success.svg)
+![Architecture MVVM](https://img.shields.io/badge/Architecture-MVVM-lightgrey.svg)
+![License MIT](https://img.shields.io/badge/License-MIT-green.svg)
+
+**Demal** — это iOS-приложение, созданное для мотивации жителей Алматы (и других мегаполисов) выбираться из городского смога на свежий горный воздух. Приложение в реальном времени отслеживает качество воздуха в городе и предлагает локации в горах с идеальной погодой и чистым небом.
+
+## ✨ Ключевые возможности
+
+- **Live AQI Tracking:** Реальные данные о смоге в городе (через Open-Meteo).
+- **Mountain Weather:** Актуальная погода на горных пиках (Meteosource API).
+- **Smart Navigation:** Построение маршрутов от текущей геопозиции пользователя прямо до горного курорта (MapKit + CoreLocation).
+- **Favorites Storage:** Сохранение любимых локаций с использованием строгой многопоточности (Actors).
 
 ## 🚀 Быстрый старт
 
 ### Требования
-- Xcode 16.4+ (26.4)
-- iOS 17.0+
-- macOS для разработки
+* Xcode 16.4+
+* iOS 17.0+
+* macOS для разработки
 
-### Запуск проекта
+### Установка и запуск
 
-1. Откройте проект в Xcode:
+1. Склонируйте репозиторий:
 ```bash
-cd /Users/alexandrkisslitsyn/Desktop/Demal
+git clone [https://github.com/ВАШ_НИК/Demal-App.git](https://github.com/Kissly1/Demal-App.git)
+
+Перейдите в папку проекта:
+
+
+cd Demal-App
+
+
+Откройте проект в Xcode:
+
+
 open Demal.xcodeproj
-```
 
-2. Выберите симулятор: **iPhone 17** (или любой iOS 17+)
 
-3. Нажмите **⌘R** или кнопку ▶️ Play
+Выберите симулятор (рекомендуется iPhone 17 / iOS 17+) и нажмите Cmd + R (▶️ Play).
 
-## 📱 Экраны приложения
+🏗️ Архитектура и Технологии
+Проект построен на современной архитектуре MVVM с полным отказом от старых подходов (никакого UIKit).
 
-### 1️⃣ Dashboard (Home)
-- Круговой AQI индикатор текущей локации
-- Glassmorphism карточка "Escape the Smog"
-- Сетка метрик погоды (Wind, Visibility, Cloud Cover, Feels Like)
-- Список горных локаций с чистым воздухом
+UI: 100% SwiftUI с активным использованием Glassmorphism (.ultraThinMaterial).
 
-### 2️⃣ Locations List
-- Поиск по локациям (`.searchable`)
-- Разделение на города и горы
-- Кнопки Pin/Share для действий
+State Management: Макрос @Observable (нативный подход iOS 17+).
 
-### 3️⃣ Location Detail
-- Детальная информация о AQI
-- Полные метрики воздуха (PM2.5, PM10, O3, NO2)
-- Погода и высота над уровнем моря
+Concurrency: Swift 6 Concurrency (async/await, @MainActor, TaskGroups для параллельных сетевых запросов).
 
-### 4️⃣ Map View
-- Интерактивная карта с пинами локаций
-- Переключение между картой и списком
+Data Safety: actor StorageManager для потокобезопасного кэширования.
 
-### 5️⃣ Profile
-- Настройки уведомлений
-- История посещений гор
-- Статистика "дыхания чистым воздухом"
+Map & Location: Нативный iOS 17 Map() API и MKDirections.
 
-## 🏗️ Архитектура
-
-```
-MVVM (Model-View-ViewModel)
-├── Models: Чистые Swift структуры (Codable, Hashable)
-├── ViewModels: @Observable (iOS 17+), @MainActor
-└── Views: SwiftUI компоненты (без логики)
-```
-
-### Ключевые технологии
-- ✅ **SwiftUI** (100%, без UIKit)
-- ✅ **@Observable macro** (iOS 17+, не ObservableObject)
-- ✅ **Swift 6 Concurrency** (@MainActor, async/await)
-- ✅ **Glassmorphism** (.ultraThinMaterial)
-- ✅ **SF Symbols** для иконок
-- ✅ **MapKit** для карты
-
-## 📊 Mock Data (Phase 1)
-
-### Города (Плохой воздух)
-| Локация | AQI | PM2.5 | Температура |
-|---------|-----|-------|-------------|
-| Almaty City Center | 158 🔴 | 67.8 | -3°C |
-| Orbita | 145 🔴 | 61.3 | -2.5°C |
-| Mikrorayon | 162 🔴 | 70.1 | -3.2°C |
-
-### Горы (Чистый воздух)
-| Локация | AQI | PM2.5 | Температура | Высота |
-|---------|-----|-------|-------------|--------|
-| Shymbulak | 12 🟢 | 4.8 | -8°C | 2260m |
-| Medeu | 18 🟢 | 7.2 | -5°C | 1691m |
-| Kok Zhailau | 8 🟢 | 3.2 | -6.5°C | 1800m |
-| Chimbulak Peak | 5 🟢 | 2.1 | -12°C | 3200m |
-
-## 🔧 Структура файлов
-
-```
+🔧 Структура проекта
+Plaintext
 Demal/
-├── DemalApp.swift                    # @main точка входа
-├── ContentView.swift                 # Root view
+├── App/
+│   └── DemalApp.swift                # Точка входа и Environment инъекции
 ├── Models/
-│   ├── Location.swift                # Domain модели
-│   └── MockData.swift                # Статические данные
+│   └── Location.swift                # Codable структуры ответов API
 ├── ViewModels/
-│   ├── DashboardViewModel.swift      # Главный экран VM
-│   └── LocationsViewModel.swift      # Список локаций VM
+│   ├── DashboardViewModel.swift      # Бизнес-логика главного экрана
+│   └── ProfileViewModel.swift        # Логика пользователя и избранного
+├── Services/
+│   ├── APIService.swift              # Сетевой слой (Meteosource, Open-Meteo)
+│   └── LocationManager.swift         # Обертка над CoreLocation
 └── Views/
-    ├── DashboardView.swift           # Home screen
-    ├── LocationsListView.swift       # Список + поиск
-    ├── LocationDetailView.swift      # Детали локации
-    ├── MapView.swift                 # Карта
-    ├── ProfileView.swift             # Профиль
-    ├── MainTabView.swift             # Tab bar
-    └── Components/
-        ├── AQIGaugeView.swift        # Круговой индикатор
-        ├── EscapeCardView.swift      # Карточка предложения
-        ├── LocationRowView.swift     # Строка списка
-        └── WeatherMetricTileView.swift # Плитка погоды
-```
+    ├── DashboardView.swift           # Главный дашборд
+    ├── MapView.swift                 # Интерактивная карта
+    └── Components/                   # Переиспользуемые элементы UI
+🎨 Design System
+Background: rgb(0.08, 0.09, 0.12) → rgb(0.10, 0.11, 0.16)
 
-## 🎨 Design System
+Accent Orange: rgb(1.0, 0.45, 0.2)
 
-### Цветовая палитра
-- **Background**: `rgb(0.08, 0.09, 0.12)` → `rgb(0.10, 0.11, 0.16)`
-- **Accent Orange**: `rgb(1.0, 0.45, 0.2)`
-- **Good AQI**: `rgb(0.2, 0.8, 0.4)` 🟢
-- **Unhealthy AQI**: `rgb(1.0, 0.35, 0.2)` 🔴
+AQI Colors: * Good 🟢 rgb(0.2, 0.8, 0.4)
 
-### Типографика
-- **Title**: `.title` / Bold
-- **Headline**: `.headline` / Semibold
-- **Body**: `.body` / Regular
-- **Caption**: `.caption` / Regular
+Unhealthy 🔴 rgb(1.0, 0.35, 0.2)
 
-## 🐛 Исправленные ошибки
+🚧 Roadmap
+Phase 1: UI & Architecture ✅
 
-См. [PHASE1_SUMMARY.md](./PHASE1_SUMMARY.md) для детального списка.
+[x] MVVM сетап и дизайн-система
 
-### Основные исправления:
-1. ✅ Создан отсутствующий `MockData.swift`
-2. ✅ Исправлены ссылки в `DashboardViewModel`
-3. ✅ Исправлен синтаксис форматирования в `DashboardView`
+[x] SwiftUI верстка (Dashboard, Map, Profile)
 
-## 📦 Build Status
+[x] Строгая настройка Concurrency
 
-```bash
-** BUILD SUCCEEDED **
-```
+Phase 2: Networking & Real Data ✅
 
-- ✅ 0 ошибок
-- ✅ 0 предупреждений
-- ✅ 16 Swift файлов компилируются
+[x] Интеграция Meteosource API (Погода в горах)
 
-## 🚧 Roadmap
+[x] Интеграция Open-Meteo API (Live AQI в городе)
 
-### Phase 2 (Networking)
-- [ ] Интеграция OpenWeatherMap API
-- [ ] Интеграция IQAir API для реальных AQI данных
-- [ ] CoreLocation для определения текущей позиции
+[x] CoreLocation для текущей позиции пользователя
 
-### Phase 3 (Features)
-- [ ] Push notifications при высоком AQI
-- [ ] SwiftData для истории локаций
-- [ ] Widgets для Home Screen
-- [ ] Apple Watch companion app
+[x] Обработка ошибок сети и фоллбэки
 
-### Phase 4 (Polish)
-- [ ] Animations и transitions
-- [ ] Haptic feedback
-- [ ] Localization (EN/RU/KZ)
-- [ ] Dark/Light theme toggle
+Phase 3: Features & Polish (В планах) ⏳
 
-## 👨‍💻 Разработчик
+[ ] Push-уведомления при высоком уровне AQI
 
-Alexander Kisslitsyn  
-Alikhan Amangeldiyev
-Almaty, Kazakhstan 🇰🇿
+[ ] Кэширование истории через SwiftData
 
----
+[ ] Локализация (EN / RU / KZ)
 
-**Версия**: 1.0 (Phase 1)  
-**Дата**: Май 2026  
-**License**: MIT
+👨‍💻 Разработчики
+Alexander Kisslitsyn * Alikhan Amangeldiyev 📍 Almaty, Kazakhstan 🇰🇿 | Май 2026
+
+MIT License
